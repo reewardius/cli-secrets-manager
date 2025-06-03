@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 
+	"golang.org/x/crypto/pkcs12"
 	"golang.org/x/term"
 )
 
@@ -103,6 +104,8 @@ func importPEMCertificate(filename string) {
 	}
 
 	var certs []string
+	ext := strings.ToLower(filepath.Ext(filename))
+	
 	for {
 		block, rest := pem.Decode(data)
 		if block == nil {
@@ -200,8 +203,8 @@ func importP12Certificate(filename string) {
 }
 
 func pkcs12ToPEM(p12 []byte, password string) ([]*pem.Block, error) {
-	// Uses deprecated x/crypto/pkcs12
-	priv, cert, caCerts, err := pkcs12.DecodeChain(p12, password)
+	// Using golang.org/x/crypto/pkcs12
+	priv, cert, err := pkcs12.Decode(p12, password)
 	if err != nil {
 		return nil, err
 	}
@@ -217,9 +220,6 @@ func pkcs12ToPEM(p12 []byte, password string) ([]*pem.Block, error) {
 
 	if cert != nil {
 		blocks = append(blocks, &pem.Block{Type: "CERTIFICATE", Bytes: cert.Raw})
-	}
-	for _, ca := range caCerts {
-		blocks = append(blocks, &pem.Block{Type: "CERTIFICATE", Bytes: ca.Raw})
 	}
 
 	return blocks, nil
