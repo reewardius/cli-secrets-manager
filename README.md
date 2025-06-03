@@ -89,7 +89,7 @@ go build -o secrets-manager
 - `.der` - DER encoded certificates
 - `.p12` / `.pfx` - PKCS#12 certificate bundles (password protected)
 
-#### Examples:
+#### Example:
 ```bash
 ./secrets-manager import-cert server.crt
 ./secrets-manager import-cert certificate.pem
@@ -101,7 +101,7 @@ For `.p12` and `.pfx` files, you will be prompted to enter the password.
 ```bash
 ./secrets-manager get cert_<filename>
 ```
-##### Example:
+#### Example:
 ```bash
 ./secrets-manager get cert_server
 ```
