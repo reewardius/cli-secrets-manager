@@ -119,10 +119,3 @@ For `.p12` and `.pfx` files, you will be prompted to enter the password.
 1. Secrets are stored in a local secrets.json file in the same directory as the executable
 2. The file is created automatically when you add your first secret
 3. All operations are thread-safe using mutex locks
-
-#### Security Notes
-
-4. Secrets are stored in plain text in the JSON file
-5. For production use, consider implementing encryption for stored secrets
-6. Keep the secrets.json file secure and add it to your .gitignore
-7. Be cautious when using the list command as it displays all secrets in plain text
